@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>EduWarriors Hub</title>
+  <link rel="icon" href="assets/icon.png" type="image/png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  
+</head>
+
+<style>
+  /* CSS Variables */
+:root {
+  --primary-color: #3498db; /* Brighter Blue */
+  --primary-color-dark: #2980b9;
+  --secondary-color: #2ecc71; /* Green for accents */
+  --secondary-color-dark: #27ae60;
+  --background-color: #ecf0f1; /* Lighter gray */
+  --surface-color: #ffffff;
+  --text-color-primary: #2c3e50;
+  --text-color-secondary: #7f8c8d;
+  --text-color-on-primary: #ffffff;
+  --card-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+  --card-hover-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+  --border-radius-sm: 6px;
+  --border-radius-md: 10px;
+}
+
+/* Basic Reset & Defaults */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color-primary);
+  line-height: 1.6;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding: 20px 15px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.app-shell {
+  width: 100%;
+  max-width: 700px;
+  background-color: var(--surface-color);
+  border-radius: var(--border-radius-md);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: appFadeInUp 0.7s 0.1s ease-out forwards;
+}
+
+@keyframes appFadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Header Styling */
+.app-header {
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-color-dark));
+  color: var(--text-color-on-primary);
+  padding: 25px 20px;
+  text-align: center;
+}
+
+.app-header .logo {
+  width: 70px;
+  height: 70px;
+  margin-bottom: 10px;
+  border-radius: 50%; /* Circular logo */
+  border: 3px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.app-header h1 {
+  font-size: 2em;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
+.app-header .subtitle {
+  font-size: 0.95em;
+  font-weight: 300;
+  opacity: 0.9;
+}
+
+/* Main Content Area */
+.app-main {
+  padding: 25px 20px;
+}
+
+.resource-grid {
+  display: grid;
+  grid-template-columns: 1fr; /* Single column by default */
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+/* On larger screens, maybe 2 columns if space allows */
+@media (min-width: 600px) {
+  .resource-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+}
+
+
+.resource-card {
+  background-color: var(--surface-color);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--card-shadow);
+  padding: 20px;
+  text-decoration: none;
+  color: var(--text-color-primary);
+  display: flex;
+  align-items: center;
+  transition: transform 0.25s ease-out, box-shadow 0.25s ease-out;
+  opacity: 0;
+  transform: translateY(15px);
+  animation: cardSlideUp 0.5s ease-out forwards;
+  /* Staggered animation will be applied by JS */
+}
+
+.resource-card:hover,
+.resource-card:focus {
+  transform: translateY(-5px);
+  box-shadow: var(--card-hover-shadow);
+  outline: none;
+}
+
+.resource-card:active {
+  transform: translateY(-2px);
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+.card-icon {
+  font-size: 1.8em;
+  color: var(--primary-color);
+  margin-right: 20px;
+  min-width: 30px; /* Ensure alignment */
+  text-align: center;
+}
+
+.card-content {
+  flex-grow: 1;
+}
+
+.card-content h2 {
+  font-size: 1.15em;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.card-content p {
+  font-size: 0.85em;
+  color: var(--text-color-secondary);
+  line-height: 1.4;
+}
+
+.card-arrow {
+  font-size: 1em;
+  color: var(--text-color-secondary);
+  opacity: 0.7;
+  transition: transform 0.2s ease-in-out;
+}
+
+.resource-card:hover .card-arrow,
+.resource-card:focus .card-arrow {
+  transform: translateX(3px);
+  color: var(--primary-color);
+}
+
+
+@keyframes cardSlideUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.full-blog-button {
+  display: flex; /* For icon and text alignment */
+  align-items: center;
+  justify-content: center;
+  gap: 10px; /* Space between icon and text */
+  background-color: var(--secondary-color);
+  color: var(--text-color-on-primary);
+  text-decoration: none;
+  padding: 14px 25px;
+  border-radius: var(--border-radius-sm);
+  font-weight: 600;
+  text-align: center;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.full-blog-button:hover,
+.full-blog-button:focus {
+  background-color: var(--secondary-color-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  outline: none;
+}
+
+.full-blog-button:active {
+  transform: translateY(0px);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+/* Footer Styling */
+.app-footer {
+  background-color: #e0e6e8; /* Slightly different from body background */
+  color: var(--text-color-secondary);
+  text-align: center;
+  padding: 20px;
+  font-size: 0.8em;
+  border-top: 1px solid #d1d8db;
+}
+
+.app-footer p {
+  margin-bottom: 5px;
+}
+
+.app-footer a {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.app-footer a:hover {
+  text-decoration: underline;
+  color: var(--primary-color-dark);
+}
+
+/* Responsive adjustments for very small screens */
+@media (max-width: 400px) {
+  body {
+    padding: 10px 8px;
+  }
+  .app-header {
+    padding: 20px 15px;
+  }
+  .app-header h1 {
+    font-size: 1.7em;
+  }
+  .app-header .logo {
+    width: 60px;
+    height: 60px;
+  }
+  .app-main {
+    padding: 20px 15px;
+  }
+  .resource-card {
+    padding: 15px;
+  }
+  .card-icon {
+    font-size: 1.6em;
+    margin-right: 15px;
+  }
+  .card-content h2 {
+    font-size: 1.05em;
+  }
+  .card-content p {
+    font-size: 0.8em;
+  }
+}
+  /* ... (Keep all your previous CSS Variables and styles) ... */
+
+/* Splash Screen Styles */
+#splash-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-color-dark)); /* Same as header or a dedicated splash gradient */
+  color: var(--text-color-on-primary);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999; /* Ensure it's on top */
+  opacity: 1;
+  transition: opacity 0.7s ease-in-out; /* For fade-out effect */
+}
+
+.splash-logo {
+  width: 100px; /* Larger logo for splash */
+  height: 100px;
+  margin-bottom: 20px;
+  border-radius: 15px; /* Or 50% for circular */
+  animation: pulseLogo 2s infinite ease-in-out;
+}
+
+@keyframes pulseLogo {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.splash-title {
+  font-size: 2.5em;
+  font-weight: 700;
+  margin-bottom: 10px;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.splash-subtitle {
+  font-size: 1.1em;
+  font-weight: 300;
+  opacity: 0.9;
+  margin-top: 5px;
+}
+
+/* Optional CSS Spinner */
+.spinner {
+  margin-top: 30px;
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Adjust main app content for splash screen */
+.app-shell {
+  /* ... (Keep existing styles like width, max-width, background-color, etc.) ... */
+  opacity: 0; /* Start hidden */
+  transform: translateY(20px); /* Initial state for animation */
+  /* The 'animation' property will be added by JS or a class */
+  /* Remove 'animation: appFadeInUp...' if it was directly here */
+  /* It will be controlled by the .start-main-animation class below */
+}
+
+/* Class to trigger the main app content's animation */
+.app-shell.start-main-animation {
+  opacity: 1; /* Ensure it's visible before animation starts if not handled by keyframes */
+  animation: appFadeInUp 0.7s 0.1s ease-out forwards; /* Your existing animation */
+}
+
+
+/* Keyframe for appFadeInUp (ensure it's defined if not already) */
+@keyframes appFadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Staggered animation for resource cards (keep this) */
+.resource-card {
+  /* ... (existing card styles) ... */
+  opacity: 0;
+  transform: translateY(15px);
+  /* The animation 'cardSlideUp' will be applied with delay by JS */
+  /* animation: cardSlideUp 0.5s ease-out forwards; (remove if only applied by JS) */
+}
+
+/* Ensure cardSlideUp animation is defined */
+@keyframes cardSlideUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* ... (Rest of your CSS) ... */
+</style>
+<body>
+
+  <!-- Splash Screen -->
+  <div id="splash-screen">
+    <img src="assets/icon.png" alt="EduWarriors Logo" class="splash-logo">
+    <h1 class="splash-title">EduWarrior's Hub</h1>
+    <p class="splash-subtitle">Loading Resources...</p>
+    <div class="spinner"></div> <!-- Optional loading spinner -->
+  </div>
+
+  <!-- Main App Content (initially hidden or prepared for animation) -->
+  <div class="app-shell" id="main-app-content">
+    <header class="app-header">
+      <img src="assets/icon.png" alt="EduWarriors Logo" class="logo">
+      <h1>EduWarrior's Hub</h1>
+      <p class="subtitle">Your Gateway to VU Learning Resources</p>
+    </header>
+
+    <main class="app-main">
+      <div class="resource-grid">
+        <!-- Resource Cards from previous example -->
+        <a class="resource-card" href="https://eduwarriors67.blogspot.com/p/handouts_20.html" target="_blank" rel="noopener noreferrer">
+          <div class="card-icon"><i class="fas fa-book-open"></i></div>
+          <div class="card-content">
+            <h2>VU Handouts</h2>
+            <p>Comprehensive study materials</p>
+          </div>
+          <div class="card-arrow"><i class="fas fa-chevron-right"></i></div>
+        </a>
+        <a class="resource-card" href="https://eduwarriors67.blogspot.com/p/highlighted-handouts.html" target="_blank" rel="noopener noreferrer">
+          <div class="card-icon"><i class="fas fa-highlighter"></i></div>
+          <div class="card-content">
+            <h2>Highlighted Handouts</h2>
+            <p>Key points emphasized for quick review</p>
+          </div>
+          <div class="card-arrow"><i class="fas fa-chevron-right"></i></div>
+        </a>
+        <a class="resource-card" href="https://eduwarriors67.blogspot.com/p/mid-term-papers.html" target="_blank" rel="noopener noreferrer">
+          <div class="card-icon"><i class="fas fa-file-alt"></i></div>
+          <div class="card-content">
+            <h2>MidTerm Past Papers</h2>
+            <p>Practice with previous exam questions</p>
+          </div>
+          <div class="card-arrow"><i class="fas fa-chevron-right"></i></div>
+        </a>
+        <a class="resource-card" href="https://eduwarriors67.blogspot.com/p/midterm-short-notes.html" target="_blank" rel="noopener noreferrer">
+          <div class="card-icon"><i class="fas fa-sticky-note"></i></div>
+          <div class="card-content">
+            <h2>MidTerm Short Notes</h2>
+            <p>Concise notes for efficient revision</p>
+          </div>
+          <div class="card-arrow"><i class="fas fa-chevron-right"></i></div>
+        </a>
+        <a class="resource-card" href="https://eduwarriors67.blogspot.com/p/final-term-papers.html" target="_blank" rel="noopener noreferrer">
+          <div class="card-icon"><i class="fas fa-file-invoice"></i></div>
+          <div class="card-content">
+            <h2>FinalTerm Past Papers</h2>
+            <p>Prepare for your final exams</p>
+          </div>
+          <div class="card-arrow"><i class="fas fa-chevron-right"></i></div>
+        </a>
+        <a class="resource-card" href="https://eduwarriors67.blogspot.com/p/final-term-short-notes.html" target="_blank" rel="noopener noreferrer">
+          <div class="card-icon"><i class="fas fa-clipboard-list"></i></div>
+          <div class="card-content">
+            <h2>FinalTerm Short Notes</h2>
+            <p>Quick summaries for final preparation</p>
+          </div>
+          <div class="card-arrow"><i class="fas fa-chevron-right"></i></div>
+        </a>
+        <a class="resource-card" href="https://eduwarriors67.blogspot.com/p/vu-essential-software.html" target="_blank" rel="noopener noreferrer">
+          <div class="card-icon"><i class="fas fa-tools"></i></div>
+          <div class="card-content">
+            <h2>Essential Software</h2>
+            <p>Tools and utilities for VU students</p>
+          </div>
+          <div class="card-arrow"><i class="fas fa-chevron-right"></i></div>
+        </a>
+      </div>
+      <a class="full-blog-button" href="https://eduwarriors67.blogspot.com/" target="_blank" rel="noopener noreferrer">
+        <i class="fas fa-globe"></i> Visit Full Blog
+      </a>
+    </main>
+    <footer class="app-footer">
+      <p>© 2025 Areeb Chaudhary. All rights reserved.</p>
+      <p>Contact: <a href="mailto:chaudharyofficial75@gmail.com">chaudharyofficial75@gmail.com</a></p>
+    </footer>
+  </div>
+
+  <script>
+
+document.addEventListener('DOMContentLoaded', () => {
+  const splashScreen = document.getElementById('splash-screen');
+  const mainAppContent = document.getElementById('main-app-content');
+  const resourceCards = document.querySelectorAll('.resource-card');
+
+  // Hide main content initially by ensuring it doesn't have the animation class
+  mainAppContent.classList.remove('start-main-animation');
+  mainAppContent.style.opacity = '0'; // Ensure it's hidden
+
+  // --- Splash Screen Logic ---
+  setTimeout(() => {
+    // Start fading out the splash screen
+    splashScreen.style.opacity = '0';
+
+    // After the splash screen fade-out animation completes
+    splashScreen.addEventListener('transitionend', () => {
+      splashScreen.style.display = 'none'; // Completely remove splash screen
+
+      // Now, make the main app content visible and start its animation
+      mainAppContent.style.opacity = '1'; // Make it visible
+      mainAppContent.classList.add('start-main-animation');
+
+      // Trigger staggered animation for resource cards AFTER main app content starts appearing
+      // We can add a small delay here to ensure main container is visible first
+      setTimeout(() => {
+        resourceCards.forEach((card, index) => {
+          card.style.animation = `cardSlideUp 0.5s ease-out ${index * 0.1 + 0.2}s forwards`;
+          // The 'forwards' keyword ensures it stays at the end state of the animation
+        });
+      }, 100); // 100ms delay after main app content animation starts
+
+    }, { once: true }); // Ensure the event listener runs only once
+
+  }, 2500); // Duration splash screen is visible (e.g., 2.5 seconds)
+
+  console.log("EduWarriors Hub with Splash Screen Loaded!");
+
+  // Any other JS for your main app can go here or be called after splash
+});
+
+  </script>
+</body>
+</html>
